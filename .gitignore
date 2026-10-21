@@ -1,2 +1,8 @@
 .env*
 .venv
+__pycache__/
+*.egg-info/
+.ipynb_checkpoints/
+results/
+checkpoints/
+claude.md

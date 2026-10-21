@@ -8,3 +8,6 @@ ipykernel
 ipywidgets
 datasets
 peft
+tqdm
+sentence-transformers
+-e .
