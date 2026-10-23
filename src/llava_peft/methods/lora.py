@@ -10,7 +10,7 @@ Notes before you start:
 
 
 def apply_lora(model, r=16, alpha=32, dropout=0.05):
-    """Wrap `model` with LoRA adapters and return the PEFT model."""
-    # TODO: build a peft.LoraConfig and call get_peft_model
-    # TODO: print the trainable parameter count (useful for the LoRA vs adapter comparison)
-    raise NotImplementedError
+	"""Wrap `model` with LoRA adapters and return the PEFT model."""
+	# TODO: build a peft.LoraConfig and call get_peft_model
+	# TODO: print the trainable parameter count (useful for the LoRA vs adapter comparison)
+	raise NotImplementedError

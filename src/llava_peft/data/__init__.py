@@ -16,6 +16,6 @@ DATASETS = {spec.name: spec for spec in (BIRDS, CARS)}
 
 
 def get_dataset(name):
-    if name not in DATASETS:
-        raise KeyError(f"Unknown dataset '{name}'. Options: {list(DATASETS)}")
-    return DATASETS[name]
+	if name not in DATASETS:
+		raise KeyError(f"Unknown dataset '{name}'. Options: {list(DATASETS)}")
+	return DATASETS[name]

@@ -15,22 +15,22 @@ RESULTS_DIR = Path(__file__).resolve().parents[1] / "results"
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--dataset", default="birds")
-    parser.add_argument("--split", default="test")
-    parser.add_argument("--limit", type=int, default=None, help="random subset size")
-    parser.add_argument("--batch-size", type=int, default=4)
-    parser.add_argument("--model-id", default="llava-hf/llava-1.5-7b-hf")
-    parser.add_argument("--adapter-path", default=None, help="saved PEFT weights to load")
-    parser.add_argument("--run-name", required=True)
-    args = parser.parse_args()
+	parser = argparse.ArgumentParser()
+	parser.add_argument("--dataset", default="birds")
+	parser.add_argument("--split", default="test")
+	parser.add_argument("--limit", type=int, default=None, help="random subset size")
+	parser.add_argument("--batch-size", type=int, default=4)
+	parser.add_argument("--model-id", default="llava-hf/llava-1.5-7b-hf")
+	parser.add_argument("--adapter-path", default=None, help="saved PEFT weights to load")
+	parser.add_argument("--run-name", required=True)
+	args = parser.parse_args()
 
-    # TODO: setup_env(), get_device()
-    # TODO: load model (+ PeftModel.from_pretrained if --adapter-path)
-    # TODO: spec = get_dataset(args.dataset); ds = spec.load(args.split, limit=args.limit)
-    # TODO: batch over ds -> generate(...), time it
-    # TODO: score_predictions(...) and write the outputs above
+	# TODO: setup_env(), get_device()
+	# TODO: load model (+ PeftModel.from_pretrained if --adapter-path)
+	# TODO: spec = get_dataset(args.dataset); ds = spec.load(args.split, limit=args.limit)
+	# TODO: batch over ds -> generate(...), time it
+	# TODO: score_predictions(...) and write the outputs above
 
 
 if __name__ == "__main__":
-    main()
+	main()
