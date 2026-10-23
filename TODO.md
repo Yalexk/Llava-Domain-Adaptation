@@ -4,11 +4,11 @@ Time estimates are rough, for someone learning as they go. Debugging and reading
 
 ## Phase 1: Zero-shot baseline (birds) · ~4–6h
 
-- [ ] `model.py`: implement `load_model` (LlavaForConditionalGeneration + AutoProcessor, left padding) · 30m
-- [ ] `model.py`: implement batched `generate` and return only the new tokens · 1h
-- [ ] Sanity-check on ~20 birds images in a notebook and look at what the model actually says · 30m
-- [ ] Tweak the prompt (`data/birds.py`) until answers are short species names · 30m
-- [ ] `eval/metrics.py`: `normalize`, exact match, contains match · 45m
+- [x] `model.py`: implement `load_model` (LlavaForConditionalGeneration + AutoProcessor, left padding) · 30m
+- [x] `model.py`: implement batched `generate` and return only the new tokens · 1h
+- [x] Sanity-check on ~20 birds images in a notebook and look at what the model actually says · 30m
+- [x] Tweak the prompt (`data/birds.py`) until answers are short species names · 30m
+- [x] `eval/metrics.py`: `normalize`, exact match, contains match · 45m
 - [ ] Test cosine similarity on a few hand-picked right/wrong pairs before trusting it · 30m
 - [ ] `eval/metrics.py`: nearest-class mapping → top-1 / top-5 accuracy · 1h
 - [ ] `scripts/evaluate.py`: wire it together, save predictions + metrics + timing · 1h
