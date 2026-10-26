@@ -9,8 +9,9 @@ Time estimates are rough, for someone learning as they go. Debugging and reading
 - [x] Sanity-check on ~20 birds images in a notebook and look at what the model actually says · 30m
 - [x] Tweak the prompt (`data/birds.py`) until answers are short species names · 30m
 - [x] `eval/metrics.py`: `normalize`, exact match, contains match · 45m
-- [ ] Test cosine similarity on a few hand-picked right/wrong pairs before trusting it · 30m
-- [ ] `eval/metrics.py`: nearest-class mapping → top-1 / top-5 accuracy · 1h
+- [x] Test cosine similarity on a few hand-picked right/wrong pairs before trusting it · 30m
+- [x] `eval/metrics.py`: nearest-class mapping → top-1 accuracy (top-5 dropped: inflated by name similarity, see `test_similarity.ipynb`) · 1h
+- [ ] Decide what to do with ambiguous (small-gap) predictions: count as wrong, or just report how many · 15m
 - [ ] `scripts/evaluate.py`: wire it together, save predictions + metrics + timing · 1h
 - [ ] Run zero-shot on the full birds test set on the GPU and record the numbers · 30m
 
