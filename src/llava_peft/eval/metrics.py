@@ -24,6 +24,11 @@ from sentence_transformers import SentenceTransformer
 
 EMBED_MODEL_ID = "sentence-transformers/all-MiniLM-L6-v2"
 
+# Predictions whose top-1 vs runner-up gap falls below this are flagged as ambiguous.
+# From test_similarity.ipynb: vague answers ("warbler", "a gull") had gaps 0.001-0.048,
+# specific answers had 0.087 and up, so 0.07 sits between the two groups.
+AMBIGUOUS_GAP = 0.07
+
 
 def normalize(text):
 	"""Normalize the string for equivalent outputs"""
@@ -85,8 +90,15 @@ def nearest_classes(preds, class_names):
 	return results
 
 
-def score_predictions(preds, labels, class_names):
-	"""Return (per_example: list[dict], summary: dict) for parallel lists of strings."""
+def score_predictions(preds, labels, class_names, ambiguous_gap=AMBIGUOUS_GAP):
+	"""Return (per_example: list[dict], summary: dict) for parallel lists of strings.
+
+	Ambiguous predictions (gap < ambiguous_gap) still count toward top1, the headline
+	number. They are reported separately rather than scored wrong:
+	  ambiguous_rate   fraction of predictions that are ambiguous
+	  top1_confident   top-1 accuracy on the non-ambiguous predictions only
+	                   (None if every prediction is ambiguous)
+	"""
 	preds, labels = list(preds), list(labels)
 	if len(preds) == 0:
 		return [], {"n": 0}
@@ -97,23 +109,40 @@ def score_predictions(preds, labels, class_names):
 	exacts = 0
 	contains = 0
 	top1s = 0
+	n_ambiguous = 0
+	top1s_confident = 0
 	# strict=True raises if the lists differ in length instead of silently truncating
 	for pred, label, near in zip(preds, labels, nearest, strict=True):
 		exact = exact_match(pred, label)
 		contain = contains_match(pred, label)
 		top1 = near["nearest"] == label
+		ambiguous = near["gap"] < ambiguous_gap
 		exacts += exact
 		contains += contain
 		top1s += top1
+		if ambiguous:
+			n_ambiguous += 1
+		else:
+			top1s_confident += top1
 		per_example.append({
 			"pred": pred,
 			"label": label,
 			"exact_match": exact,
 			"contains_match": contain,
 			"top1": top1,
+			"ambiguous": ambiguous,
 			**near,
 		})
 
 	n = len(per_example)
-	summary = {"n": n, "exact_match": exacts / n, "contains_match": contains / n, "top1": top1s / n}
+	n_confident = n - n_ambiguous
+	summary = {
+		"n": n,
+		"exact_match": exacts / n,
+		"contains_match": contains / n,
+		"top1": top1s / n,
+		"ambiguous_gap": ambiguous_gap,
+		"ambiguous_rate": n_ambiguous / n,
+		"top1_confident": top1s_confident / n_confident if n_confident else None,
+	}
 	return per_example, summary
