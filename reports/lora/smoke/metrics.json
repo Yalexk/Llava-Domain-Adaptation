@@ -1,0 +1,26 @@
+{
+  "config": {
+    "dataset": "birds",
+    "split": "test",
+    "limit": 100,
+    "batch_size": 4,
+    "model_id": "llava-hf/llava-1.5-7b-hf",
+    "adapter_path": "results/birds_lora_r16/adapter",
+    "run_name": "birds_lora_r16-eval-smoke"
+  },
+  "device": "cuda",
+  "metrics": {
+    "n": 100,
+    "exact_match": 0.74,
+    "contains_match": 0.74,
+    "top1": 0.74,
+    "ambiguous_gap": 0.07,
+    "ambiguous_rate": 0.0,
+    "top1_confident": 0.74
+  },
+  "timing": {
+    "total_seconds": 37.83107765799991,
+    "seconds_per_example": 0.3783107765799991,
+    "peak_memory_gb": 15.776889344
+  }
+}
