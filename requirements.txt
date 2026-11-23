@@ -10,4 +10,5 @@ datasets
 peft
 tqdm
 sentence-transformers
+accelerate
 -e .

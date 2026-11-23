@@ -14,7 +14,7 @@ def load_model(model_id=DEFAULT_MODEL_ID, device="cpu", dtype=torch.float16):
 	# padding, shorter prompts would have pad tokens between the prompt and the answer.
 	processor.tokenizer.padding_side = "left"
 
-	model = LlavaForConditionalGeneration.from_pretrained(model_id, dtype=dtype).to(device)
+	model = LlavaForConditionalGeneration.from_pretrained(model_id, dtype=dtype, device_map=device)
 	return model, processor
 
 
