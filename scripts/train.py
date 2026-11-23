@@ -22,12 +22,13 @@ from transformers import get_cosine_schedule_with_warmup
 
 from llava_peft.data import get_dataset
 from llava_peft.data.collate import TrainCollator
+from llava_peft.methods.adapter import apply_bottleneck_adapter, apply_projector_tuning, save_trainable
 from llava_peft.methods.lora import apply_lora
 from llava_peft.model import load_model
 from llava_peft.utils import get_device, peak_memory_gb, setup_env
 
 RESULTS_DIR = Path(__file__).resolve().parents[1] / "results"
-METHODS = {"lora": apply_lora}
+METHODS = ["lora", "bottleneck", "projector"]
 
 
 def sync(device):
@@ -58,7 +59,7 @@ def validation_loss(model, loader, device, dtype):
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--dataset", default="birds")
-	parser.add_argument("--method", default="lora", choices=list(METHODS))
+	parser.add_argument("--method", default="lora", choices=METHODS, help="lora: peft LoRA | bottleneck: Pfeiffer adapter after each LM MLP | projector: train linear_2 only")
 	parser.add_argument("--model-id", default="llava-hf/llava-1.5-7b-hf")
 	parser.add_argument("--limit", type=int, default=None, help="train on a random subset (use ~50 to overfit-test)")
 	parser.add_argument("--val-fraction", type=float, default=0.1, help="held out from train, not test")
@@ -68,7 +69,8 @@ def main():
 	parser.add_argument("--lr", type=float, default=2e-4)
 	parser.add_argument("--warmup-ratio", type=float, default=0.03)
 	parser.add_argument("--max-grad-norm", type=float, default=1.0)
-	parser.add_argument("--rank", type=int, default=16)
+	parser.add_argument("--rank", type=int, default=16, help="LoRA rank")
+	parser.add_argument("--bottleneck-size", type=int, default=64, help="bottleneck adapter width")
 	parser.add_argument("--seed", type=int, default=0)
 	parser.add_argument("--num-workers", type=int, default=2)
 	parser.add_argument("--log-every", type=int, default=10, help="optimizer steps between loss log entries")
@@ -87,7 +89,12 @@ def main():
 	torch.manual_seed(args.seed)
 
 	model, processor = load_model(args.model_id, device=device, dtype=dtype)
-	model = METHODS[args.method](model, r=args.rank)
+	if args.method == "lora":
+		model = apply_lora(model, r=args.rank)
+	elif args.method == "bottleneck":
+		model = apply_bottleneck_adapter(model, bottleneck=args.bottleneck_size)
+	else:
+		model = apply_projector_tuning(model)
 	if args.grad_checkpointing:
 		# Non-reentrant checkpointing works with a frozen embedding layer, so
 		# enable_input_require_grads() isn't needed.
@@ -170,7 +177,12 @@ def main():
 
 	out_dir = RESULTS_DIR / args.run_name
 	out_dir.mkdir(parents=True, exist_ok=True)
-	model.save_pretrained(out_dir / "adapter")
+	if args.method == "lora":
+		model.save_pretrained(out_dir / "adapter")
+	elif args.method == "bottleneck":
+		save_trainable(model, out_dir / "adapter", "bottleneck", bottleneck=args.bottleneck_size)
+	else:
+		save_trainable(model, out_dir / "adapter", "projector")
 
 	metrics = {
 		"config": vars(args),

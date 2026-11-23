@@ -18,6 +18,7 @@ from tqdm import tqdm
 
 from llava_peft.data import get_dataset
 from llava_peft.eval.metrics import score_predictions
+from llava_peft.methods.adapter import is_custom_adapter, load_trainable
 from llava_peft.model import generate, load_model
 from llava_peft.utils import get_device, peak_memory_gb, setup_env
 
@@ -67,8 +68,11 @@ def main():
 
 	model, processor = load_model(args.model_id, device=device)
 	if args.adapter_path:
-		from peft import PeftModel
-		model = PeftModel.from_pretrained(model, args.adapter_path)
+		if is_custom_adapter(args.adapter_path):
+			model = load_trainable(model, args.adapter_path)
+		else:
+			from peft import PeftModel
+			model = PeftModel.from_pretrained(model, args.adapter_path)
 	model.eval()
 
 	spec = get_dataset(args.dataset)
