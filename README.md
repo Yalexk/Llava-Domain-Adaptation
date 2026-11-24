@@ -20,6 +20,7 @@ src/llava_peft/            reusable code, importable as `llava_peft`
   utils.py                 .env + HF login, device selection (cuda > mps > cpu)
   data/                    dataset registry; every dataset loads as {image, label}
   model.py                 model/processor loading and generation
+  backbones.py             per-backbone settings (LLaVA, Qwen3-VL): model class, projector target, image size
   methods/                 PEFT methods (lora.py, adapter.py)
   eval/metrics.py          scoring predictions against labels
 scripts/                   command-line entry points (evaluate.py, later train.py)

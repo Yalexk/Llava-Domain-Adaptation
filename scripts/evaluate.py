@@ -16,6 +16,7 @@ from pathlib import Path
 import torch
 from tqdm import tqdm
 
+from llava_peft.backbones import BACKBONES, get_backbone
 from llava_peft.data import get_dataset
 from llava_peft.eval.metrics import score_predictions
 from llava_peft.methods.adapter import is_custom_adapter, load_trainable
@@ -31,7 +32,7 @@ def sync(device):
 		torch.cuda.synchronize()
 
 
-def run_generation(model, processor, ds, prompt, batch_size, device):
+def run_generation(model, processor, ds, prompt, batch_size, device, image_size=None):
 	"""Return (preds, labels, seconds) for the whole dataset."""
 	preds, labels = [], []
 	sync(device)
@@ -39,7 +40,7 @@ def run_generation(model, processor, ds, prompt, batch_size, device):
 	for i in tqdm(range(0, len(ds), batch_size), desc="generating"):
 		# Slicing an HF Dataset gives a dict of columns: {"image": [...], "label": [...]}
 		batch = ds[i:i + batch_size]
-		preds.extend(generate(model, processor, batch["image"], prompt))
+		preds.extend(generate(model, processor, batch["image"], prompt, image_size=image_size))
 		labels.extend(batch["label"])
 	sync(device)
 	return preds, labels, time.perf_counter() - start
@@ -57,10 +58,15 @@ def main():
 	parser.add_argument("--split", default="test")
 	parser.add_argument("--limit", type=int, default=None, help="random subset size (seeded)")
 	parser.add_argument("--batch-size", type=int, default=4)
-	parser.add_argument("--model-id", default="llava-hf/llava-1.5-7b-hf")
+	parser.add_argument("--model-id", default="llava-hf/llava-1.5-7b-hf", choices=list(BACKBONES))
+	parser.add_argument("--image-size", type=int, default=None,
+		help="center-crop images to this square size (default: the backbone's, see backbones.py)")
 	parser.add_argument("--adapter-path", default=None, help="saved PEFT weights to load")
 	parser.add_argument("--run-name", required=True)
 	args = parser.parse_args()
+	if args.image_size is None:
+		# Must match the size the adapter was trained at (recorded in its train_metrics.json)
+		args.image_size = get_backbone(args.model_id).image_size
 
 	setup_env()
 	device = get_device()
@@ -83,7 +89,8 @@ def main():
 	if device == "cuda":
 		torch.cuda.reset_peak_memory_stats()
 
-	preds, labels, seconds = run_generation(model, processor, ds, spec.prompt, args.batch_size, device)
+	preds, labels, seconds = run_generation(model, processor, ds, spec.prompt, args.batch_size, device,
+		image_size=args.image_size)
 	peak_gb = peak_memory_gb(device)
 
 	out_dir = RESULTS_DIR / args.run_name

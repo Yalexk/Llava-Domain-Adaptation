@@ -1,6 +1,7 @@
-"""Fine-tune LLaVA with a PEFT method and save the adapter weights.
+"""Fine-tune a VLM (LLaVA or Qwen3-VL) with a PEFT method and save the adapter weights.
 
-	python scripts/train.py --dataset birds --method lora --run-name birds_lora_r16 --limit 50
+	python scripts/train.py --dataset birds --method lora --run-name birds_lora_r4 --limit 50
+	python scripts/train.py --model-id Qwen/Qwen3-VL-2B-Instruct --method lora --run-name qwen_birds_lora_r4
 
 Outputs in results/<run-name>/ (gitignored):
   adapter/        saved PEFT weights (load with scripts/evaluate.py --adapter-path)
@@ -20,6 +21,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 from transformers import get_cosine_schedule_with_warmup
 
+from llava_peft.backbones import BACKBONES, get_backbone
 from llava_peft.data import get_dataset
 from llava_peft.data.collate import TrainCollator
 from llava_peft.methods.adapter import apply_bottleneck_adapter, apply_projector_tuning, save_trainable
@@ -60,7 +62,9 @@ def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--dataset", default="birds")
 	parser.add_argument("--method", default="lora", choices=METHODS, help="lora: peft LoRA | bottleneck: Pfeiffer adapter after each LM MLP | projector: train linear_2 only")
-	parser.add_argument("--model-id", default="llava-hf/llava-1.5-7b-hf")
+	parser.add_argument("--model-id", default="llava-hf/llava-1.5-7b-hf", choices=list(BACKBONES))
+	parser.add_argument("--image-size", type=int, default=None,
+		help="center-crop images to this square size (default: the backbone's, see backbones.py)")
 	parser.add_argument("--limit", type=int, default=None, help="train on a random subset (use ~50 to overfit-test)")
 	parser.add_argument("--val-fraction", type=float, default=0.1, help="held out from train, not test")
 	parser.add_argument("--epochs", type=int, default=1)
@@ -69,7 +73,7 @@ def main():
 	parser.add_argument("--lr", type=float, default=2e-4)
 	parser.add_argument("--warmup-ratio", type=float, default=0.03)
 	parser.add_argument("--max-grad-norm", type=float, default=1.0)
-	parser.add_argument("--rank", type=int, default=16, help="LoRA rank")
+	parser.add_argument("--rank", type=int, default=4, help="LoRA rank")
 	parser.add_argument("--bottleneck-size", type=int, default=64, help="bottleneck adapter width")
 	parser.add_argument("--seed", type=int, default=0)
 	parser.add_argument("--num-workers", type=int, default=2)
@@ -78,6 +82,14 @@ def main():
 		help="recompute activations in backward to save memory (needed for batch 4 on a 24GB GPU)")
 	parser.add_argument("--run-name", required=True)
 	args = parser.parse_args()
+
+	backbone = get_backbone(args.model_id)
+	if args.image_size is None:
+		# Resolved here so train_metrics.json records the size evaluate.py must reuse
+		args.image_size = backbone.image_size
+	if args.method == "projector" and backbone.projector_target is None:
+		# Check before the minutes-long model load
+		parser.error(f"no projector target chosen for {args.model_id}; set it in backbones.py")
 
 	setup_env()
 	device = get_device()
@@ -94,7 +106,7 @@ def main():
 	elif args.method == "bottleneck":
 		model = apply_bottleneck_adapter(model, bottleneck=args.bottleneck_size)
 	else:
-		model = apply_projector_tuning(model)
+		model = apply_projector_tuning(model, target=backbone.projector_target)
 	if args.grad_checkpointing:
 		# Non-reentrant checkpointing works with a frozen embedding layer, so
 		# enable_input_require_grads() isn't needed.
@@ -110,7 +122,7 @@ def main():
 		train_ds, val_ds = ds, None
 	print(f"train: {len(train_ds)} examples, val: {len(val_ds) if val_ds else 0}")
 
-	collator = TrainCollator(processor, spec.prompt)
+	collator = TrainCollator(processor, spec.prompt, image_size=args.image_size)
 	generator = torch.Generator().manual_seed(args.seed)
 	train_loader = DataLoader(train_ds, batch_size=args.batch_size, shuffle=True, collate_fn=collator,
 		num_workers=args.num_workers, generator=generator)
@@ -182,7 +194,7 @@ def main():
 	elif args.method == "bottleneck":
 		save_trainable(model, out_dir / "adapter", "bottleneck", bottleneck=args.bottleneck_size)
 	else:
-		save_trainable(model, out_dir / "adapter", "projector")
+		save_trainable(model, out_dir / "adapter", "projector", target=backbone.projector_target)
 
 	metrics = {
 		"config": vars(args),

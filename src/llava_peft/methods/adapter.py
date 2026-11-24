@@ -1,7 +1,8 @@
-"""Non-LoRA PEFT methods for LLaVA, written by hand (peft has no bottleneck adapters).
+"""Non-LoRA PEFT methods for VLMs, written by hand (peft has no bottleneck adapters).
 
 - bottleneck: Pfeiffer-style adapter after the MLP of every language-model decoder layer.
-- projector:  train only `multi_modal_projector.linear_2` (the 4096x4096 vision->text bridge).
+- projector:  train only the vision->text bridge layer named by the backbone (backbones.py).
+              LLaVA: `multi_modal_projector.linear_2`, the 4096x4096 bridge.
 
 Both keep the trainable weights in fp32 even when the base model runs in bf16/fp16.
 (peft does the same for LoRA.) Updating bf16 weights directly loses small steps to rounding,
@@ -17,7 +18,8 @@ from torch import nn
 
 # Full-match on the module name, e.g. model.language_model.layers.7.mlp
 LM_MLP_REGEX = re.compile(r".*language_model.*\.layers\.\d+\.mlp")
-PROJECTOR_LAYER_REGEX = re.compile(r".*multi_modal_projector\.linear_2")
+# Default for checkpoints saved before the target was recorded in custom_adapter.json (LLaVA runs)
+DEFAULT_PROJECTOR_TARGET = r".*multi_modal_projector\.linear_2"
 
 WEIGHTS_FILE = "trainable.pt"
 CONFIG_FILE = "custom_adapter.json"
@@ -102,12 +104,17 @@ def apply_bottleneck_adapter(model, bottleneck=64):
 	return model
 
 
-def apply_projector_tuning(model):
-	"""Freeze `model` and unfreeze only `multi_modal_projector.linear_2`. Params: 4096*4096 + 4096 = 16.78M."""
+def apply_projector_tuning(model, target=DEFAULT_PROJECTOR_TARGET):
+	"""Freeze `model` and unfreeze only the module whose name full-matches `target`.
+
+	LLaVA's linear_2: 4096*4096 + 4096 = 16.78M params.
+	"""
+	if target is None:
+		raise ValueError("no projector target set for this backbone; choose one in backbones.py")
 	_freeze(model)
-	targets = [n for n, _ in model.named_modules() if PROJECTOR_LAYER_REGEX.fullmatch(n)]
+	targets = [n for n, _ in model.named_modules() if re.fullmatch(target, n)]
 	if len(targets) != 1:
-		raise ValueError(f"expected exactly one projector linear_2, found {targets}")
+		raise ValueError(f"expected exactly one module matching {target!r}, found {targets}")
 	wrapped = FP32Linear(model.get_submodule(targets[0]))
 	for p in wrapped.parameters():
 		p.requires_grad = True

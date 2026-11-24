@@ -1,5 +1,7 @@
 import torch
-from transformers import AutoProcessor, LlavaForConditionalGeneration
+from transformers import AutoProcessor
+
+from llava_peft.backbones import get_backbone, prepare_image
 
 DEFAULT_MODEL_ID = "llava-hf/llava-1.5-7b-hf"
 
@@ -14,7 +16,8 @@ def load_model(model_id=DEFAULT_MODEL_ID, device="cpu", dtype=torch.float16):
 	# padding, shorter prompts would have pad tokens between the prompt and the answer.
 	processor.tokenizer.padding_side = "left"
 
-	model = LlavaForConditionalGeneration.from_pretrained(model_id, dtype=dtype, device_map=device)
+	model_class = get_backbone(model_id).model_class
+	model = model_class.from_pretrained(model_id, dtype=dtype, device_map=device)
 	return model, processor
 
 
@@ -31,10 +34,11 @@ def make_messages(prompt):
 
 
 @torch.inference_mode()
-def generate(model, processor, images, prompt, max_new_tokens=30):
+def generate(model, processor, images, prompt, max_new_tokens=30, image_size=None):
 	"""Run a batch of PIL images through the model with one prompt and return a list of strings.
 
-	Return only the newly generated text, without the prompt.
+	Return only the newly generated text, without the prompt. image_size center-crops every
+	image to a fixed square first (see backbones.py); None leaves sizing to the processor.
 	"""
 	# 1. Messages -> prompt string, e.g. "USER: <image>\n<prompt> ASSISTANT:"
 	text = processor.apply_chat_template(make_messages(prompt), add_generation_prompt=True)
@@ -43,7 +47,7 @@ def generate(model, processor, images, prompt, max_new_tokens=30):
 	#    padding=True pads every prompt to the same length so they stack into one batch.
 	#    .to(device, dtype) only casts float tensors (pixel_values), not the token ids.
 	inputs = processor(
-		images=[img.convert("RGB") for img in images],
+		images=[prepare_image(img, image_size) for img in images],
 		text=[text] * len(images),
 		padding=True,
 		return_tensors="pt",
