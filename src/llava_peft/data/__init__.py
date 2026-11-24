@@ -11,8 +11,9 @@ doesn't care which domain it's running on:
 
 from .birds import BIRDS
 from .cars import CARS
+from .nabirds import NABIRDS
 
-DATASETS = {spec.name: spec for spec in (BIRDS, CARS)}
+DATASETS = {spec.name: spec for spec in (BIRDS, CARS, NABIRDS)}
 
 
 def get_dataset(name):
