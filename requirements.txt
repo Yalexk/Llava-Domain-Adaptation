@@ -1,4 +1,5 @@
 torch
+torchvision
 transformers
 huggingface_hub
 python-dotenv
