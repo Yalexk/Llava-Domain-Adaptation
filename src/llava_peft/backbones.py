@@ -1,22 +1,45 @@
 """Per-backbone settings, so every script works on LLaVA or Qwen3-VL by changing --model-id.
 
-Everything model-specific lives here: which class loads the weights, which layer the
-"projector" method trains, and how images are sized before the processor sees them.
+Everything model-specific lives here: which class loads the weights, where each PEFT method
+can be placed (--location) and at what size, and how images are sized before the processor.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from PIL import ImageOps
 from transformers import LlavaForConditionalGeneration, Qwen3VLForConditionalGeneration
+
+LOCATIONS = ["lm", "projector", "vision"]
+
+
+@dataclass(frozen=True)
+class Location:
+	"""Where in the model a method goes, and the sizes that give every cell the same budget.
+
+	Regexes are full-matched against module names. None = that method isn't defined here.
+	"""
+	# LoRA wraps every Linear matching this
+	lora_target: str | None
+	lora_rank: int | None
+	# A bottleneck adapter goes after every module matching this ...
+	adapter_target: str | None
+	# ... sized adapter_hidden -> adapter_size -> adapter_hidden (the matched modules' output width)
+	adapter_hidden: int | None
+	adapter_size: int | None
 
 
 @dataclass(frozen=True)
 class Backbone:
 	model_class: type
-	# Full-match regex for the layer the "projector" method unfreezes. None = not chosen yet.
+	# Full-match regex for the layer the "projector" method (full fine-tune) unfreezes. None = unset.
 	projector_target: str | None
 	# Side in pixels every image is center-cropped to. None = leave sizing to the processor.
 	image_size: int | None
+	locations: dict[str, Location] = field(default_factory=dict)
+
+
+LM_ATTENTION = r".*language_model.*\.(q_proj|k_proj|v_proj|o_proj)"
+LM_MLP = r".*language_model.*\.layers\.\d+\.mlp"
 
 
 BACKBONES = {
@@ -25,19 +48,41 @@ BACKBONES = {
 		projector_target=r".*multi_modal_projector\.linear_2",
 		# The CLIP processor already crops to 336, so every image is 576 tokens
 		image_size=None,
+		# The published runs, all ~16.8M: LoRA 16,777,216 / adapter 16,910,336 / projector 16,781,312
+		locations={
+			"lm": Location(LM_ATTENTION, 16, LM_MLP, 4096, 64),
+			# Adapter on the projector output: 2*4096*2047 + 2047 + 4096 = 16,775,167. No projector
+			# LoRA: 16.8M on linear_1 (1024 inputs) would need r~1260, above its full rank of 1024.
+			"projector": Location(None, None, r".*multi_modal_projector", 4096, 2047),
+		},
 	),
 	"Qwen/Qwen3-VL-2B-Instruct": Backbone(
 		model_class=Qwen3VLForConditionalGeneration,
-		# TODO(owner): Qwen3-VL has no single vision->LM bridge. Options:
+		# TODO(owner): full fine-tune target. Qwen3-VL has no single vision->LM bridge:
 		#   r".*visual\.merger\.linear_fc2"  main merger only, 4096->2048, 8.39M params
-		#   or also the 3 DeepStack mergers (visual.deepstack_merger_list.N), which feed
-		#   ViT layers 5/11/17 into the first decoder layers. apply_projector_tuning
-		#   currently expects the regex to match exactly one module.
+		#   or also the 3 DeepStack mergers (visual.deepstack_merger_list.N).
 		projector_target=None,
 		# Dynamic resolution: the token count follows the image size (81-300 on CUB-sized
 		# images), which would break the collator's cached prompt length.
 		# 448 / (patch 16 * merge 2) = 14 -> 28x28 patches -> 196 image tokens, always.
 		image_size=448,
+		# Every cell ~1.6M trainable params, anchored on LoRA r=4 in the LM (1,605,632)
+		locations={
+			# LoRA q/k/v/o r=4: 28 * 4 * (4096 + 3072 + 3072 + 4096) = 1,605,632
+			# adapter after each MLP m=13: 28 * (2*2048*13 + 13 + 2048) = 1,548,652 (-3.5%)
+			"lm": Location(LM_ATTENTION, 4, LM_MLP, 2048, 13),
+			# Main merger only: neither pattern can match deepstack_merger_list.N, so the 3 DeepStack
+			# paths reach the first decoder layers without passing through the trained part.
+			# LoRA fc1+fc2 r=112: 112 * ((4096+4096) + (4096+2048)) = 1,605,632
+			# adapter on the merger output m=391: 2*2048*391 + 391 + 2048 = 1,603,975 (-0.1%)
+			"projector": Location(r".*visual\.merger\.(linear_fc1|linear_fc2)", 112,
+				r".*visual\.merger", 2048, 391),
+			# 24 ViT blocks at 1024-d, before the merger. Edits here also reach the DeepStack paths.
+			# LoRA qkv+proj r=11: 24 * 11 * ((1024+3072) + (1024+1024)) = 1,622,016 (+1.0%)
+			# adapter after each ViT MLP m=32: 24 * (2*1024*32 + 32 + 1024) = 1,598,208 (-0.5%)
+			"vision": Location(r".*visual\.blocks\.\d+\.attn\.(qkv|proj)", 11,
+				r".*visual\.blocks\.\d+\.mlp", 1024, 32),
+		},
 	),
 }
 

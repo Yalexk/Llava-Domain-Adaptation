@@ -1,7 +1,7 @@
 """Fine-tune a VLM (LLaVA or Qwen3-VL) with a PEFT method and save the adapter weights.
 
 	python scripts/train.py --dataset birds --method lora --run-name birds_lora_r4 --limit 50
-	python scripts/train.py --model-id Qwen/Qwen3-VL-2B-Instruct --method lora --run-name qwen_birds_lora_r4
+	python scripts/train.py --model-id Qwen/Qwen3-VL-2B-Instruct --method adapter --location vision --run-name qwen_birds_adapter_vision
 
 Outputs in results/<run-name>/ (gitignored):
   adapter/        saved PEFT weights (load with scripts/evaluate.py --adapter-path)
@@ -21,7 +21,7 @@ from torch.utils.data import DataLoader
 from tqdm import tqdm
 from transformers import get_cosine_schedule_with_warmup
 
-from llava_peft.backbones import BACKBONES, get_backbone
+from llava_peft.backbones import BACKBONES, LOCATIONS, get_backbone
 from llava_peft.data import get_dataset
 from llava_peft.data.collate import TrainCollator
 from llava_peft.methods.adapter import apply_bottleneck_adapter, apply_projector_tuning, save_trainable
@@ -30,7 +30,7 @@ from llava_peft.model import load_model
 from llava_peft.utils import get_device, peak_memory_gb, setup_env
 
 RESULTS_DIR = Path(__file__).resolve().parents[1] / "results"
-METHODS = ["lora", "bottleneck", "projector"]
+METHODS = ["lora", "adapter", "projector"]
 
 
 def sync(device):
@@ -61,7 +61,11 @@ def validation_loss(model, loader, device, dtype):
 def main():
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--dataset", default="birds")
-	parser.add_argument("--method", default="lora", choices=METHODS, help="lora: peft LoRA | bottleneck: Pfeiffer adapter after each LM MLP | projector: train linear_2 only")
+	parser.add_argument("--method", default="lora", choices=METHODS,
+		help="lora: peft LoRA | adapter: bottleneck adapter | projector: fine-tune the bridge's last linear")
+	parser.add_argument("--location", default="lm", choices=LOCATIONS,
+		help="where lora/adapter go: lm = language model, projector = vision->LM bridge, "
+		"vision = vision encoder (targets and sizes in backbones.py; ignored by --method projector)")
 	parser.add_argument("--model-id", default="llava-hf/llava-1.5-7b-hf", choices=list(BACKBONES))
 	parser.add_argument("--image-size", type=int, default=None,
 		help="center-crop images to this square size (default: the backbone's, see backbones.py)")
@@ -73,8 +77,12 @@ def main():
 	parser.add_argument("--lr", type=float, default=2e-4)
 	parser.add_argument("--warmup-ratio", type=float, default=0.03)
 	parser.add_argument("--max-grad-norm", type=float, default=1.0)
-	parser.add_argument("--rank", type=int, default=4, help="LoRA rank")
-	parser.add_argument("--bottleneck-size", type=int, default=64, help="bottleneck adapter width")
+	parser.add_argument("--rank", type=int, default=None,
+		help="LoRA rank (default: the location's, matched across cells in backbones.py)")
+	parser.add_argument("--lora-alpha", type=int, default=None,
+		help="LoRA scale numerator; the update is multiplied by alpha/rank (default: 2 * rank)")
+	parser.add_argument("--bottleneck-size", type=int, default=None,
+		help="adapter width m (default: the location's, matched across cells in backbones.py)")
 	parser.add_argument("--seed", type=int, default=0)
 	parser.add_argument("--num-workers", type=int, default=2)
 	parser.add_argument("--log-every", type=int, default=10, help="optimizer steps between loss log entries")
@@ -84,9 +92,24 @@ def main():
 	args = parser.parse_args()
 
 	backbone = get_backbone(args.model_id)
+	# Resolve backbone defaults here so train_metrics.json records the values actually used
 	if args.image_size is None:
-		# Resolved here so train_metrics.json records the size evaluate.py must reuse
 		args.image_size = backbone.image_size
+	if args.method != "projector":
+		# Fail before the minutes-long model load if this cell of the grid isn't defined
+		loc = backbone.locations.get(args.location)
+		target = loc and (loc.lora_target if args.method == "lora" else loc.adapter_target)
+		if target is None:
+			parser.error(f"--method {args.method} --location {args.location} is not defined for "
+				f"{args.model_id}; see backbones.py")
+		if args.rank is None:
+			args.rank = loc.lora_rank
+		if args.bottleneck_size is None:
+			args.bottleneck_size = loc.adapter_size
+	if args.lora_alpha is None and args.rank is not None:
+		# alpha = 2r keeps alpha/r at 2 for any rank, so changing the rank doesn't also
+		# change the update scale (LLaVA r=16 -> 32, as in the published run)
+		args.lora_alpha = 2 * args.rank
 	if args.method == "projector" and backbone.projector_target is None:
 		# Check before the minutes-long model load
 		parser.error(f"no projector target chosen for {args.model_id}; set it in backbones.py")
@@ -102,9 +125,10 @@ def main():
 
 	model, processor = load_model(args.model_id, device=device, dtype=dtype)
 	if args.method == "lora":
-		model = apply_lora(model, r=args.rank)
-	elif args.method == "bottleneck":
-		model = apply_bottleneck_adapter(model, bottleneck=args.bottleneck_size)
+		model = apply_lora(model, r=args.rank, alpha=args.lora_alpha, target=loc.lora_target)
+	elif args.method == "adapter":
+		model = apply_bottleneck_adapter(model, bottleneck=args.bottleneck_size, target=loc.adapter_target,
+			hidden=loc.adapter_hidden)
 	else:
 		model = apply_projector_tuning(model, target=backbone.projector_target)
 	if args.grad_checkpointing:
@@ -191,8 +215,10 @@ def main():
 	out_dir.mkdir(parents=True, exist_ok=True)
 	if args.method == "lora":
 		model.save_pretrained(out_dir / "adapter")
-	elif args.method == "bottleneck":
-		save_trainable(model, out_dir / "adapter", "bottleneck", bottleneck=args.bottleneck_size)
+	elif args.method == "adapter":
+		# Record placement so load_trainable rebuilds the same structure at eval time
+		save_trainable(model, out_dir / "adapter", "bottleneck", bottleneck=args.bottleneck_size,
+			target=loc.adapter_target, hidden=loc.adapter_hidden)
 	else:
 		save_trainable(model, out_dir / "adapter", "projector", target=backbone.projector_target)
 
