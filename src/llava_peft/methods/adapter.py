@@ -1,6 +1,8 @@
 """Non-LoRA PEFT methods for VLMs, written by hand (peft has no bottleneck adapters).
 
-- bottleneck: Pfeiffer-style adapter after the MLP of every language-model decoder layer.
+- bottleneck: Pfeiffer-style adapter after every module matching a target. Where it goes
+              (LM MLPs, the vision->LM bridge, ViT MLPs) comes from --location in backbones.py;
+              the block is the same everywhere, so runs differ in position, not design.
 - projector:  train only the vision->text bridge layer named by the backbone (backbones.py).
               LLaVA: `multi_modal_projector.linear_2`, the 4096x4096 bridge.
 
@@ -16,8 +18,9 @@ from pathlib import Path
 import torch
 from torch import nn
 
-# Full-match on the module name, e.g. model.language_model.layers.7.mlp
-LM_MLP_REGEX = re.compile(r".*language_model.*\.layers\.\d+\.mlp")
+# Default adapter target, and the one used by checkpoints saved before targets were recorded
+# in custom_adapter.json (the LLaVA runs). Full-match, e.g. model.language_model.layers.7.mlp
+LM_MLP_TARGET = r".*language_model.*\.layers\.\d+\.mlp"
 # Default for checkpoints saved before the target was recorded in custom_adapter.json (LLaVA runs)
 DEFAULT_PROJECTOR_TARGET = r".*multi_modal_projector\.linear_2"
 
@@ -81,18 +84,20 @@ def _report(model):
 	print(f"trainable params: {trainable:,} || all params: {total:,} || trainable%: {100 * trainable / total:.4f}")
 
 
-def apply_bottleneck_adapter(model, bottleneck=64):
-	"""Freeze `model`, insert a bottleneck adapter after every language-model MLP, return the model.
+def apply_bottleneck_adapter(model, bottleneck=64, target=LM_MLP_TARGET, hidden=None):
+	"""Freeze `model`, insert a bottleneck adapter after every module full-matching `target`.
 
-	Params: 32 layers x (2 * 4096 * bottleneck + 4096 + bottleneck). bottleneck=64 -> 16.9M,
-	close to LoRA r=16 on q/k/v/o (16.78M).
+	`hidden` is those modules' output width (default: the LM's hidden size, right for LM MLPs and
+	for the vision->LM bridge, whose output is LM-sized). Params per adapter:
+	2 * hidden * bottleneck + bottleneck + hidden. LLaVA LM, 32 x m=64 -> 16.9M.
 	"""
 	_freeze(model)
 	# Collect first: replacing modules while iterating named_modules() is unsafe
-	targets = [n for n, _ in model.named_modules() if LM_MLP_REGEX.fullmatch(n)]
+	targets = [n for n, _ in model.named_modules() if re.fullmatch(target, n)]
 	if not targets:
-		raise ValueError("no language-model MLP modules matched LM_MLP_REGEX; check model.named_modules()")
-	hidden = model.config.text_config.hidden_size
+		raise ValueError(f"no modules matched {target!r}; check model.named_modules()")
+	if hidden is None:
+		hidden = model.config.text_config.hidden_size
 	for name in targets:
 		mlp = model.get_submodule(name)
 		device = next(mlp.parameters()).device
