@@ -1,146 +1,154 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1660 640" width="1660" height="640" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1480 900" width="1480" height="900" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
 <defs><marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker><filter id="sh" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity="0.18"/></filter></defs>
-<rect width="1660" height="640" fill="#ffffff"/>
+<rect width="1480" height="900" fill="#ffffff"/>
 <path d="M48.0,40.0 L58.0,40.0 M54.0,40.0 L51.3,42.2 M54.0,40.0 L51.3,37.8 M48.0,40.0 L53.0,48.7 M51.0,45.2 L47.7,44.0 M51.0,45.2 L51.6,41.7 M48.0,40.0 L43.0,48.7 M45.0,45.2 L44.4,41.7 M45.0,45.2 L48.3,44.0 M48.0,40.0 L38.0,40.0 M42.0,40.0 L44.7,37.8 M42.0,40.0 L44.7,42.2 M48.0,40.0 L43.0,31.3 M45.0,34.8 L48.3,36.0 M45.0,34.8 L44.4,38.3 M48.0,40.0 L53.0,31.3 M51.0,34.8 L51.6,38.3 M51.0,34.8 L47.7,36.0" stroke="#4b77d1" stroke-width="1.6" stroke-linecap="round" fill="none"/>
 <text x="66.0" y="46.0" font-size="15" fill="#222" font-weight="500" text-anchor="start">Frozen</text>
 <path transform="translate(148.0,40.0) scale(1.15)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
 <text x="164.0" y="46.0" font-size="15" fill="#222" font-weight="500" text-anchor="start">Learnable</text>
-<path d="M500.0,560.0 L500.0,502.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<text x="500.0" y="580.0" font-size="12.5" fill="#444" font-weight="500" text-anchor="middle">image + prompt tokens</text>
-<rect x="410.0" y="462.0" width="180.0" height="38.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="500.0" y="486.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Layer Norm</text>
-<path d="M500.0,462.0 L500.0,450.0" stroke="#111111" stroke-width="1.8" fill="none"/>
-<path d="M450.0,450.0 L550.0,450.0" stroke="#111111" stroke-width="1.8" fill="none"/>
-<path d="M450.0,450.0 L450.0,438.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M500.0,450.0 L500.0,438.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M550.0,450.0 L550.0,438.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="410.0" y="380.0" width="180.0" height="56.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="500.0" y="403.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Multi-head</text>
-<text x="500.0" y="422.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Attention</text>
-<path d="M500.0,380.0 L500.0,363.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<circle cx="500.0" cy="350.0" r="11" fill="#fff" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M489.0,350.0 H511.0 M500.0,339.0 V361.0" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M500.0,522.0 L620.0,522.0 L620.0,350.0 L513.0,350.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M500.0,339.0 L500.0,328.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="410.0" y="288.0" width="180.0" height="38.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="500.0" y="312.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Layer Norm</text>
-<path d="M500.0,288.0 L500.0,260.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="410.0" y="220.0" width="180.0" height="38.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="500.0" y="244.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">MLP</text>
-<path d="M500.0,220.0 L500.0,139.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<circle cx="500.0" cy="126.0" r="11" fill="#fff" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M489.0,126.0 H511.0 M500.0,115.0 V137.0" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M500.0,334.0 L620.0,334.0 L620.0,126.0 L513.0,126.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M500.0,115.0 L500.0,76.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<text x="630.0" y="240.0" font-size="16" fill="#222" font-weight="700" text-anchor="start">× 32</text>
-<rect x="279.0" y="389.0" width="92.0" height="38.0" rx="8" fill="#fbd9bd" filter="url(#sh)"/>
-<text x="335.0" y="413.0" font-size="15" fill="#e0522b" font-weight="700" text-anchor="middle">LoRA</text>
-<path transform="translate(305.8,408.0) scale(0.95)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
-<path d="M371.0,408.0 L410.0,408.0" stroke="#111111" stroke-width="1.8" fill="none"/>
-<text x="325.0" y="445.0" font-size="11.5" fill="#e0522b" font-weight="500" text-anchor="middle">on q, k, v, o</text>
-<rect x="40.0" y="196.0" width="190.0" height="324.0" rx="10" fill="#ffffff" stroke="#ef8a5a" stroke-width="2"/>
-<text x="52.0" y="216.0" font-size="11.5" fill="#8a5a44" font-weight="500" text-anchor="start">each of q, k, v, o</text>
-<path d="M135.0,508.0 L135.0,478.0" stroke="#111111" stroke-width="1.8" fill="none"/>
-<path d="M90.0,478.0 L180.0,478.0" stroke="#111111" stroke-width="1.8" fill="none"/>
-<path d="M90.0,478.0 L90.0,444.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="60.0" y="400.0" width="60.0" height="42.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="90.0" y="426.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">W</text>
-<path d="M180.0,478.0 L180.0,462.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<polygon points="161.0,426.0 199.0,426.0 217.0,460.0 143.0,460.0" fill="#fbd9bd" filter="url(#sh)"/>
-<text x="180.0" y="448.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="middle">A</text>
-<text x="173.0" y="417.0" font-size="10.5" fill="#8a5a44" font-weight="500" text-anchor="end">r = 16</text>
-<path d="M180.0,426.0 L180.0,412.0" stroke="#111111" stroke-width="1.8" fill="none"/>
-<polygon points="143.0,366.0 217.0,366.0 199.0,400.0 161.0,400.0" fill="#fbd9bd" filter="url(#sh)"/>
-<text x="180.0" y="388.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="middle">B</text>
-<path d="M180.0,400.0 L180.0,402.0" stroke="#111111" stroke-width="1.8" fill="none"/>
-<path d="M180.0,366.0 L180.0,352.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="150.0" y="330.0" width="60.0" height="20.0" fill="#111"/>
-<text x="180.0" y="344.5" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="middle">× α/r</text>
-<path d="M90.0,372.0 L90.0,270.0 L122.0,270.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M180.0,330.0 L180.0,270.0 L148.0,270.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<circle cx="135.0" cy="270.0" r="11" fill="#fff" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M124.0,270.0 H146.0 M135.0,259.0 V281.0" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M135.0,259.0 L135.0,226.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M230.0,300.0 L279.0,395.0" stroke="#ef8a5a" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
-<path d="M1100.0,560.0 L1100.0,502.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<text x="1100.0" y="580.0" font-size="12.5" fill="#444" font-weight="500" text-anchor="middle">image + prompt tokens</text>
-<rect x="1010.0" y="462.0" width="180.0" height="38.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="1100.0" y="486.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Layer Norm</text>
-<path d="M1100.0,462.0 L1100.0,450.0" stroke="#111111" stroke-width="1.8" fill="none"/>
-<path d="M1050.0,450.0 L1150.0,450.0" stroke="#111111" stroke-width="1.8" fill="none"/>
-<path d="M1050.0,450.0 L1050.0,438.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M1100.0,450.0 L1100.0,438.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M1150.0,450.0 L1150.0,438.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1010.0" y="380.0" width="180.0" height="56.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="1100.0" y="403.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Multi-head</text>
-<text x="1100.0" y="422.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Attention</text>
-<path d="M1100.0,380.0 L1100.0,363.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<circle cx="1100.0" cy="350.0" r="11" fill="#fff" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M1089.0,350.0 H1111.0 M1100.0,339.0 V361.0" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M1100.0,522.0 L1220.0,522.0 L1220.0,350.0 L1113.0,350.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M1100.0,339.0 L1100.0,328.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1010.0" y="288.0" width="180.0" height="38.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="1100.0" y="312.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Layer Norm</text>
-<path d="M1100.0,288.0 L1100.0,260.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1010.0" y="220.0" width="180.0" height="38.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="1100.0" y="244.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">MLP</text>
-<path d="M1100.0,220.0 L1100.0,196.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1010.0" y="156.0" width="180.0" height="38.0" rx="8" fill="#fbd9bd" filter="url(#sh)"/>
-<text x="1110.0" y="180.0" font-size="15" fill="#e0522b" font-weight="700" text-anchor="middle">Adapter</text>
-<path transform="translate(1067.9,175.0) scale(0.95)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
-<path d="M1100.0,156.0 L1100.0,139.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<circle cx="1100.0" cy="126.0" r="11" fill="#fff" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M1089.0,126.0 H1111.0 M1100.0,115.0 V137.0" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M1100.0,334.0 L1220.0,334.0 L1220.0,126.0 L1113.0,126.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M1100.0,115.0 L1100.0,76.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<text x="1230.0" y="240.0" font-size="16" fill="#222" font-weight="700" text-anchor="start">× 32</text>
-<rect x="710.0" y="196.0" width="190.0" height="324.0" rx="10" fill="#ffffff" stroke="#ef8a5a" stroke-width="2"/>
-<text x="722.0" y="216.0" font-size="11.5" fill="#8a5a44" font-weight="500" text-anchor="start">adapter</text>
-<path d="M805.0,508.0 L805.0,462.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<polygon points="773.0,420.0 837.0,420.0 865.0,460.0 745.0,460.0" fill="#fbd9bd" filter="url(#sh)"/>
-<text x="805.0" y="439.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="middle">Down</text>
-<text x="805.0" y="453.0" font-size="10.5" fill="#e0522b" font-weight="500" text-anchor="middle">4096 → 64</text>
-<path d="M805.0,420.0 L805.0,404.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="775.0" y="382.0" width="60.0" height="20.0" fill="#111"/>
-<text x="805.0" y="396.5" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="middle">GELU</text>
-<path d="M805.0,382.0 L805.0,366.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<polygon points="745.0,324.0 865.0,324.0 837.0,364.0 773.0,364.0" fill="#fbd9bd" filter="url(#sh)"/>
-<text x="805.0" y="343.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="middle">Up</text>
-<text x="805.0" y="357.0" font-size="10.5" fill="#e0522b" font-weight="500" text-anchor="middle">64 → 4096</text>
-<path d="M805.0,324.0 L805.0,293.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<circle cx="805.0" cy="280.0" r="11" fill="#fff" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M794.0,280.0 H816.0 M805.0,269.0 V291.0" stroke="#8a8a8a" stroke-width="2"/>
-<path d="M805.0,488.0 L883.0,488.0 L883.0,280.0 L818.0,280.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M805.0,269.0 L805.0,226.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<path d="M900.0,240.0 L1008.0,175.0" stroke="#ef8a5a" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
-<text x="1470.0" y="580.0" font-size="12.5" fill="#444" font-weight="500" text-anchor="middle">image</text>
-<path d="M1470.0,566.0 L1470.0,522.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1380.0" y="482.0" width="180.0" height="38.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="1470.0" y="506.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">CLIP ViT</text>
-<path d="M1470.0,482.0 L1470.0,462.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1375.0" y="322" width="190" height="138" rx="10" fill="none" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="4 4"/>
-<text x="1366.0" y="395.0" font-size="13" fill="#555" font-weight="600" text-anchor="end">Projector</text>
-<rect x="1395.0" y="414.0" width="150.0" height="36.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="1470.0" y="437.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Linear 1</text>
-<path d="M1470.0,414.0 L1470.0,404.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1440.0" y="384.0" width="60.0" height="18.0" fill="#111"/>
-<text x="1470.0" y="397.5" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="middle">GELU</text>
-<path d="M1470.0,384.0 L1470.0,372.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1395.0" y="334.0" width="150.0" height="36.0" rx="8" fill="#fbd9bd" filter="url(#sh)"/>
-<text x="1480.0" y="357.0" font-size="15" fill="#e0522b" font-weight="700" text-anchor="middle">Linear 2</text>
-<path transform="translate(1433.6,352.0) scale(0.95)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
-<path d="M1470.0,334.0 L1470.0,282.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<text x="1620.0" y="580.0" font-size="12.5" fill="#444" font-weight="500" text-anchor="middle">prompt</text>
-<path d="M1620.0,566.0 L1620.0,300.0 L1540.0,300.0 L1540.0,282.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1355.0" y="220.0" width="230.0" height="60.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="1470.0" y="245.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Language Model</text>
-<text x="1470.0" y="264.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">32 decoder layers</text>
-<path d="M1470.0,220.0 L1470.0,194.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<rect x="1395.0" y="156.0" width="150.0" height="36.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
-<text x="1470.0" y="179.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">LM Head</text>
-<path d="M1470.0,156.0 L1470.0,120.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
-<text x="1470.0" y="108.0" font-size="12.5" fill="#444" font-weight="500" text-anchor="middle">output</text>
-<text x="360.0" y="622.0" font-size="17" fill="#222" font-weight="400" text-anchor="middle">a. LoRA (r = 16)</text>
-<text x="990.0" y="622.0" font-size="17" fill="#222" font-weight="400" text-anchor="middle">b. Bottleneck adapter (m = 64)</text>
-<text x="1480.0" y="622.0" font-size="17" fill="#222" font-weight="400" text-anchor="middle">c. Projector-only tuning</text>
+<text x="270.0" y="46.0" font-size="15" fill="#666" font-weight="400" text-anchor="start">Qwen3-VL-2B-Instruct  ·  method × location  ·  ~1.6M trainable params per cell</text>
+<text x="352.5" y="112.0" font-size="17" fill="#222" font-weight="700" text-anchor="middle">Vision encoder</text>
+<text x="797.5" y="112.0" font-size="17" fill="#222" font-weight="700" text-anchor="middle">Projector (merger)</text>
+<text x="1242.5" y="112.0" font-size="17" fill="#222" font-weight="700" text-anchor="middle">Language model</text>
+<text transform="translate(86,312) rotate(-90)" font-size="20" fill="#222" font-weight="700" text-anchor="middle">LoRA</text>
+<text transform="translate(110,312) rotate(-90)" font-size="12" fill="#777" font-weight="500" text-anchor="middle">low-rank update to existing layers</text>
+<text transform="translate(86,698) rotate(-90)" font-size="20" fill="#222" font-weight="700" text-anchor="middle">Adapter</text>
+<text transform="translate(110,698) rotate(-90)" font-size="12" fill="#777" font-weight="500" text-anchor="middle">new bottleneck block, zero-init</text>
+<rect x="140" y="130" width="425" height="365" rx="12" fill="#fbfbfa" stroke="#ecebe7" stroke-width="1"/>
+<text x="280.0" y="482.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">image</text>
+<path d="M280.0,470.0 L280.0,446.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="180.0" y="392.0" width="200.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="280.0" y="413.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Vision Encoder</text>
+<text x="280.0" y="432.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">24 blocks</text>
+<path d="M280.0,392.0 L280.0,360.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="205.0" y="322.0" width="150.0" height="36.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="280.0" y="345.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Merger</text>
+<path d="M280.0,322.0 L280.0,254.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="175.0" y="200.0" width="210.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="280.0" y="221.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Language Model</text>
+<text x="280.0" y="240.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">28 layers</text>
+<path d="M280.0,200.0 L280.0,176.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<text x="280.0" y="166.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">output</text>
+<path d="M180.0,418 H154.0 V226 H172.0" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#ah)"/>
+<text transform="translate(147.0,322) rotate(-90)" font-size="10.5" fill="#888" font-weight="500" text-anchor="middle">DeepStack ×3</text>
+<path d="M380.0,418.0 L405.0,418.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<rect x="405.0" y="395.0" width="156" height="46" rx="8" fill="#fbd9bd" filter="url(#sh)"/>
+<path transform="translate(423.0,411.0) scale(0.85)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="435.0" y="416.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="start">LoRA</text>
+<text x="417.0" y="433.0" font-size="10.5" fill="#e0522b" font-weight="500" text-anchor="start">qkv, proj · r = 11</text>
+<text x="551.0" y="482.0" font-size="12" fill="#777" font-weight="500" text-anchor="end">1,622,016 params</text>
+<rect x="585" y="130" width="425" height="365" rx="12" fill="#fbfbfa" stroke="#ecebe7" stroke-width="1"/>
+<text x="725.0" y="482.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">image</text>
+<path d="M725.0,470.0 L725.0,446.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="625.0" y="392.0" width="200.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="725.0" y="413.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Vision Encoder</text>
+<text x="725.0" y="432.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">24 blocks</text>
+<path d="M725.0,392.0 L725.0,360.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="650.0" y="322.0" width="150.0" height="36.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="725.0" y="345.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Merger</text>
+<path d="M725.0,322.0 L725.0,254.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="620.0" y="200.0" width="210.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="725.0" y="221.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Language Model</text>
+<text x="725.0" y="240.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">28 layers</text>
+<path d="M725.0,200.0 L725.0,176.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<text x="725.0" y="166.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">output</text>
+<path d="M625.0,418 H599.0 V226 H617.0" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#ah)"/>
+<text transform="translate(592.0,322) rotate(-90)" font-size="10.5" fill="#888" font-weight="500" text-anchor="middle">DeepStack ×3</text>
+<path d="M800.0,340.0 L850.0,340.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<rect x="850.0" y="317.0" width="156" height="46" rx="8" fill="#fbd9bd" filter="url(#sh)"/>
+<path transform="translate(868.0,333.0) scale(0.85)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="880.0" y="338.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="start">LoRA</text>
+<text x="862.0" y="355.0" font-size="10.5" fill="#e0522b" font-weight="500" text-anchor="start">fc1, fc2 · r = 112</text>
+<text x="996.0" y="482.0" font-size="12" fill="#777" font-weight="500" text-anchor="end">1,605,632 params</text>
+<rect x="1030" y="130" width="425" height="365" rx="12" fill="#fbfbfa" stroke="#ecebe7" stroke-width="1"/>
+<text x="1170.0" y="482.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">image</text>
+<path d="M1170.0,470.0 L1170.0,446.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="1070.0" y="392.0" width="200.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="1170.0" y="413.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Vision Encoder</text>
+<text x="1170.0" y="432.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">24 blocks</text>
+<path d="M1170.0,392.0 L1170.0,360.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="1095.0" y="322.0" width="150.0" height="36.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="1170.0" y="345.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Merger</text>
+<path d="M1170.0,322.0 L1170.0,254.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="1065.0" y="200.0" width="210.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="1170.0" y="221.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Language Model</text>
+<text x="1170.0" y="240.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">28 layers</text>
+<path d="M1170.0,200.0 L1170.0,176.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<text x="1170.0" y="166.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">output</text>
+<path d="M1070.0,418 H1044.0 V226 H1062.0" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#ah)"/>
+<text transform="translate(1037.0,322) rotate(-90)" font-size="10.5" fill="#888" font-weight="500" text-anchor="middle">DeepStack ×3</text>
+<path d="M1275.0,226.0 L1295.0,226.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<rect x="1295.0" y="203.0" width="156" height="46" rx="8" fill="#fbd9bd" filter="url(#sh)"/>
+<path transform="translate(1313.0,219.0) scale(0.85)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="1325.0" y="224.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="start">LoRA</text>
+<text x="1307.0" y="241.0" font-size="10.5" fill="#e0522b" font-weight="500" text-anchor="start">q, k, v, o · r = 4</text>
+<text x="1441.0" y="482.0" font-size="12" fill="#777" font-weight="500" text-anchor="end">1,605,632 params</text>
+<rect x="140" y="515" width="425" height="365" rx="12" fill="#fbfbfa" stroke="#ecebe7" stroke-width="1"/>
+<text x="280.0" y="867.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">image</text>
+<path d="M280.0,855.0 L280.0,831.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="180.0" y="777.0" width="200.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="280.0" y="798.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Vision Encoder</text>
+<text x="280.0" y="817.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">24 blocks</text>
+<path d="M280.0,777.0 L280.0,745.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="205.0" y="707.0" width="150.0" height="36.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="280.0" y="730.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Merger</text>
+<path d="M280.0,707.0 L280.0,639.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="175.0" y="585.0" width="210.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="280.0" y="606.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Language Model</text>
+<text x="280.0" y="625.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">28 layers</text>
+<path d="M280.0,585.0 L280.0,561.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<text x="280.0" y="551.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">output</text>
+<path d="M180.0,803 H154.0 V611 H172.0" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#ah)"/>
+<text transform="translate(147.0,707) rotate(-90)" font-size="10.5" fill="#888" font-weight="500" text-anchor="middle">DeepStack ×3</text>
+<path d="M380.0,803.0 L405.0,803.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<rect x="405.0" y="780.0" width="156" height="46" rx="8" fill="#fbd9bd" filter="url(#sh)"/>
+<path transform="translate(423.0,796.0) scale(0.85)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="435.0" y="801.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="start">Adapter</text>
+<text x="417.0" y="818.0" font-size="10.5" fill="#e0522b" font-weight="500" text-anchor="start">after each ViT MLP · m = 32</text>
+<text x="551.0" y="867.0" font-size="12" fill="#777" font-weight="500" text-anchor="end">1,598,208 params</text>
+<rect x="585" y="515" width="425" height="365" rx="12" fill="#fbfbfa" stroke="#ecebe7" stroke-width="1"/>
+<text x="725.0" y="867.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">image</text>
+<path d="M725.0,855.0 L725.0,831.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="625.0" y="777.0" width="200.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="725.0" y="798.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Vision Encoder</text>
+<text x="725.0" y="817.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">24 blocks</text>
+<path d="M725.0,777.0 L725.0,745.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="650.0" y="707.0" width="150.0" height="36.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="725.0" y="730.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Merger</text>
+<path d="M725.0,707.0 L725.0,689.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="650.0" y="653.0" width="150.0" height="34.0" rx="8" fill="#fbd9bd" filter="url(#sh)"/>
+<text x="735.0" y="675.0" font-size="15" fill="#e0522b" font-weight="700" text-anchor="middle">Adapter</text>
+<path transform="translate(692.9,670.0) scale(0.95)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="811.0" y="675.0" font-size="11.5" fill="#e0522b" font-weight="500" text-anchor="start">m = 391</text>
+<path d="M725.0,653.0 L725.0,639.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="620.0" y="585.0" width="210.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="725.0" y="606.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Language Model</text>
+<text x="725.0" y="625.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">28 layers</text>
+<path d="M725.0,585.0 L725.0,561.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<text x="725.0" y="551.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">output</text>
+<path d="M625.0,803 H599.0 V611 H617.0" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#ah)"/>
+<text transform="translate(592.0,707) rotate(-90)" font-size="10.5" fill="#888" font-weight="500" text-anchor="middle">DeepStack ×3</text>
+<text x="996.0" y="867.0" font-size="12" fill="#777" font-weight="500" text-anchor="end">1,603,975 params</text>
+<rect x="1030" y="515" width="425" height="365" rx="12" fill="#fbfbfa" stroke="#ecebe7" stroke-width="1"/>
+<text x="1170.0" y="867.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">image</text>
+<path d="M1170.0,855.0 L1170.0,831.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="1070.0" y="777.0" width="200.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="1170.0" y="798.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Vision Encoder</text>
+<text x="1170.0" y="817.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">24 blocks</text>
+<path d="M1170.0,777.0 L1170.0,745.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="1095.0" y="707.0" width="150.0" height="36.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="1170.0" y="730.0" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Merger</text>
+<path d="M1170.0,707.0 L1170.0,639.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="1065.0" y="585.0" width="210.0" height="52.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="1170.0" y="606.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">Language Model</text>
+<text x="1170.0" y="625.5" font-size="15" fill="#1d2b7d" font-weight="700" text-anchor="middle">28 layers</text>
+<path d="M1170.0,585.0 L1170.0,561.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<text x="1170.0" y="551.0" font-size="12" fill="#444" font-weight="500" text-anchor="middle">output</text>
+<path d="M1070.0,803 H1044.0 V611 H1062.0" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#ah)"/>
+<text transform="translate(1037.0,707) rotate(-90)" font-size="10.5" fill="#888" font-weight="500" text-anchor="middle">DeepStack ×3</text>
+<path d="M1275.0,611.0 L1295.0,611.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<rect x="1295.0" y="588.0" width="156" height="46" rx="8" fill="#fbd9bd" filter="url(#sh)"/>
+<path transform="translate(1313.0,604.0) scale(0.85)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="1325.0" y="609.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="start">Adapter</text>
+<text x="1307.0" y="626.0" font-size="10.5" fill="#e0522b" font-weight="500" text-anchor="start">after each MLP · m = 13</text>
+<text x="1441.0" y="867.0" font-size="12" fill="#777" font-weight="500" text-anchor="end">1,548,652 params</text>
 </svg>
