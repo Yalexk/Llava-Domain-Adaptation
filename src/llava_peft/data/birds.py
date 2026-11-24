@@ -31,5 +31,6 @@ BIRDS = BirdsSpec(
 	name="birds",
 	hf_id="cassiekang/cub200_dataset",
 	prompt="Identify the bird species in this photo. Reply with its full common name only, for example Great Blue Heron.",
-	to_example=lambda row, spec: {"image": row["image"], "label": label_from_text(row["text"])},
+	label_column="text",
+	to_label=lambda text, spec: label_from_text(text),
 )
