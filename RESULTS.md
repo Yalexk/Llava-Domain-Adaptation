@@ -39,31 +39,6 @@ Trained on an L4 in bf16. Zero-shot scores **31.4%** top-1 and 24.4% exact.
 
 **Ambiguous** is the share of answers whose closest and second-closest class names are within 0.07 of each other. Eval peak memory is 4.5 GB for every run.
 
-### What it shows so far
-
-- **Fine-tuning more than doubles accuracy.** Zero-shot scores 31.4%, and every matched cell reaches 71–77%.
-- **At a matched budget, LoRA's location barely matters.**
-  - The three LoRA cells are within 1.4 points of each other.
-  - That gap is small enough to be noise, since there's one seed per cell.
-- **The adapter depends more on where it goes than LoRA does.**
-  - In the language model it matches LoRA (75.2% vs 75.3%).
-  - It's 4.5 points behind at the projector and 5.3 points behind in the vision encoder.
-- **The same-rank control mostly measures parameter count.**
-  - At r=4, accuracy follows the number of trainable parameters (LM > vision > projector).
-  - The projector's lead at matched budget came from its budget, not its location.
-- **Small cells are probably undertrained.** The r=4 runs' validation loss was still falling clearly at epoch 2.
-- **Fewer parameters don't make training faster.**
-  - Training time is set by the forward and backward pass through the frozen model.
-  - `lora_vision_r4` took as long as `lora_vision`, despite having 2.7× fewer parameters.
-  - Vision cells are slower because the backward pass has to go through the ViT.
-
-### Pending
-
-- Section 9 sublayer control (LoRA on MLPs instead of attention), running on Kaggle T4s in **fp16**:
-  - `lora_lm_mlp` (r=2, 1,376,256 params)
-  - `lora_vision_mlp` (r=7, 1,720,320 params)
-- Section 8: r=2 at every LoRA location.
-
 ## LLaVA-1.5-7B on CUB-200 (200 species, 5,794 test images)
 
 First round, before the location grid. Trained on an L4 in bf16 with ~17M trainable params each.
