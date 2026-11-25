@@ -9,7 +9,8 @@ from dataclasses import dataclass, field
 from PIL import ImageOps
 from transformers import LlavaForConditionalGeneration, Qwen3VLForConditionalGeneration
 
-LOCATIONS = ["lm", "projector", "vision"]
+# lm_mlp / vision_mlp are the sublayer control: LoRA on the MLP instead of attention, LoRA only
+LOCATIONS = ["lm", "projector", "vision", "lm_mlp", "vision_mlp"]
 
 
 @dataclass(frozen=True)
@@ -40,6 +41,8 @@ class Backbone:
 
 LM_ATTENTION = r".*language_model.*\.(q_proj|k_proj|v_proj|o_proj)"
 LM_MLP = r".*language_model.*\.layers\.\d+\.mlp"
+# The Linears inside each LM MLP, for LoRA (LM_MLP above is the whole block, for the adapter)
+LM_MLP_LINEARS = r".*language_model.*\.layers\.\d+\.mlp\.(gate_proj|up_proj|down_proj)"
 
 
 BACKBONES = {
@@ -82,6 +85,13 @@ BACKBONES = {
 			# adapter after each ViT MLP m=32: 24 * (2*1024*32 + 32 + 1024) = 1,598,208 (-0.5%)
 			"vision": Location(r".*visual\.blocks\.\d+\.attn\.(qkv|proj)", 11,
 				r".*visual\.blocks\.\d+\.mlp", 1024, 32),
+			# Sublayer control: LoRA on the MLP Linears instead of attention, so LoRA vs adapter can be
+			# separated from attention vs MLP (the adapter already sits on the MLP). LoRA only.
+			# LM gate/up/down r=2: 28 * 2 * 3 * (2048 + 6144) = 1,376,256 (-14%; r=3 would be +29%)
+			"lm_mlp": Location(LM_MLP_LINEARS, 2, None, None, None),
+			# ViT fc1+fc2 r=7: 24 * 7 * 2 * (1024 + 4096) = 1,720,320 (+7%; r=6 would be -8%)
+			"vision_mlp": Location(r".*visual\.blocks\.\d+\.mlp\.(linear_fc1|linear_fc2)", 7,
+				None, None, None),
 		},
 	),
 }

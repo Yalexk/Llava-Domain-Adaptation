@@ -65,7 +65,8 @@ def main():
 		help="lora: peft LoRA | adapter: bottleneck adapter | projector: fine-tune the bridge's last linear")
 	parser.add_argument("--location", default="lm", choices=LOCATIONS,
 		help="where lora/adapter go: lm = language model, projector = vision->LM bridge, "
-		"vision = vision encoder (targets and sizes in backbones.py; ignored by --method projector)")
+		"vision = vision encoder, lm_mlp / vision_mlp = LoRA on the MLPs instead of attention "
+		"(targets and sizes in backbones.py; ignored by --method projector)")
 	parser.add_argument("--model-id", default="llava-hf/llava-1.5-7b-hf", choices=list(BACKBONES))
 	parser.add_argument("--image-size", type=int, default=None,
 		help="center-crop images to this square size (default: the backbone's, see backbones.py)")
