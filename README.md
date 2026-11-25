@@ -1,6 +1,6 @@
 # Llava-domain-adaptation
 
-This project investigates how well parameter-efficient fine-tuning (PEFT) adapts multimodal language models to different visual domains. It compares LoRA and adapter-based PEFT on fine-grained datasets, measuring both output quality and compute cost, and asks *where* in the model adaptation helps most: the vision encoder, the vision-to-language projector, or the language model.
+I'm investigating how well parameter-efficient fine-tuning (PEFT) adapts multimodal language models to different visual domains. This project compares LoRA and adapter-based PEFT on fine-grained datasets, measuring both output quality and compute cost, and asks *where* in the model adaptation helps most: the vision encoder, the vision-to-language projector, or the language model.
 
 Domains:
 
@@ -24,6 +24,8 @@ Backbones (pick one with `--model-id`):
 Each run picks a method (`--method lora` or `--method adapter`) and where to put it (`--location vision`, `projector` or `lm`). Everything else stays frozen. Sizes are chosen so every cell trains the same number of parameters (~1.6M on Qwen3-VL-2B), which means differences between cells come from placement, not budget.
 
 ![PEFT methods by location](reports/peft_architectures.png)
+
+*Diagram generated using AI*
 
 | Qwen3-VL-2B | Vision encoder | Projector (merger) | Language model |
 |---|---|---|---|
@@ -91,19 +93,6 @@ Create a `.env` file in the project root with your Hugging Face token:
 HF_TOKEN=hf_...
 ```
 
-### Remote GPU (SSH)
-
-Training runs on a remote GPU machine. On the remote:
-
-```bash
-git clone <repo-url> && cd Llava-Adapter
-# same venv + pip install steps as above, then copy over .env
-nvidia-smi                        # confirm the GPU is visible
-python -c "from llava_peft.utils import get_device; print(get_device())"   # should print cuda
-```
-
-Run long jobs inside `tmux` so they survive a dropped connection. Set `HF_HOME` to a disk with space: Qwen3-VL-2B is ~4.3GB and LLaVA-1.5-7B ~14GB. Copy `results/` back with `rsync` or `scp`.
-
 ## Training
 
 ```bash
@@ -112,8 +101,6 @@ python scripts/train.py --model-id Qwen/Qwen3-VL-2B-Instruct --method adapter --
 ```
 
 Leave `--rank`, `--bottleneck-size` and `--image-size` unset to get each cell's matched defaults. Add `--limit 50 --val-fraction 0 --epochs 15` for a quick overfit smoke test. Outputs go to `results/<run-name>/`: `adapter/` (the trained weights) and `train_metrics.json` (config, trainable params, train time, peak memory, loss and validation history).
-
-**To run the full Qwen grid, follow [RUNBOOK.md](RUNBOOK.md).** It covers every command in order, with what to expect at each step.
 
 ## Running an evaluation
 
