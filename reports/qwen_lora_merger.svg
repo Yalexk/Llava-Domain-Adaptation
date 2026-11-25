@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 725" width="1500" height="725" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+<defs><marker id="ah" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#111"/></marker><filter id="sh" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="1.6" flood-color="#000" flood-opacity="0.18"/></filter></defs>
+<rect width="1500" height="725" fill="#ffffff"/>
+<path d="M48.0,40.0 L58.0,40.0 M54.0,40.0 L51.3,42.2 M54.0,40.0 L51.3,37.8 M48.0,40.0 L53.0,48.7 M51.0,45.2 L47.7,44.0 M51.0,45.2 L51.6,41.7 M48.0,40.0 L43.0,48.7 M45.0,45.2 L44.4,41.7 M45.0,45.2 L48.3,44.0 M48.0,40.0 L38.0,40.0 M42.0,40.0 L44.7,37.8 M42.0,40.0 L44.7,42.2 M48.0,40.0 L43.0,31.3 M45.0,34.8 L48.3,36.0 M45.0,34.8 L44.4,38.3 M48.0,40.0 L53.0,31.3 M51.0,34.8 L51.6,38.3 M51.0,34.8 L47.7,36.0" stroke="#4b77d1" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<text x="66.0" y="46.0" font-size="15" fill="#222" font-weight="500" text-anchor="start">Frozen</text>
+<path transform="translate(148.0,40.0) scale(1.15)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="164.0" y="46.0" font-size="15" fill="#222" font-weight="500" text-anchor="start">Learnable</text>
+<text x="270.0" y="46.0" font-size="15" fill="#666" font-weight="400" text-anchor="start">LoRA in the merger (projector) · Qwen3-VL-2B-Instruct · r = 112, α = 224</text>
+<g transform="translate(0,-140)">
+<text x="260.0" y="790.0" font-size="12.5" fill="#444" font-weight="500" text-anchor="middle">image</text>
+<path d="M260.0,776.0 L260.0,742.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="160.0" y="680.0" width="200.0" height="60.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="260.0" y="707.0" font-size="14.5" fill="#1d2b7d" font-weight="700" text-anchor="middle">Vision Encoder</text>
+<text x="260.0" y="724.0" font-size="11" fill="#777" font-weight="500" text-anchor="middle">24 blocks · frozen</text>
+<path d="M260.0,680.0 L260.0,642.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="160.0" y="520" width="200" height="120" rx="10" fill="#d5e3f6" stroke="#e0522b" stroke-width="2.5" filter="url(#sh)"/>
+<text x="260.0" y="556.0" font-size="15.5" fill="#1d2b7d" font-weight="700" text-anchor="middle">Merger</text>
+<text x="260.0" y="574.0" font-size="11" fill="#777" font-weight="500" text-anchor="middle">784 patches → 196 tokens</text>
+<rect x="227.0" y="590.0" width="66" height="22" rx="11" fill="#fbd9bd" stroke="#e0522b" stroke-width="1.2"/>
+<path transform="translate(240.0,601.0) scale(0.62)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="268.0" y="605.5" font-size="12" fill="#e0522b" font-weight="700" text-anchor="middle">LoRA</text>
+<path d="M260.0,520.0 L260.0,452.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="155.0" y="330.0" width="210.0" height="120.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="260.0" y="387.0" font-size="14.5" fill="#1d2b7d" font-weight="700" text-anchor="middle">Language Model</text>
+<text x="260.0" y="404.0" font-size="11" fill="#777" font-weight="500" text-anchor="middle">28 layers · frozen</text>
+<path d="M260.0,330.0 L260.0,292.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<text x="260.0" y="280.0" font-size="12.5" fill="#444" font-weight="500" text-anchor="middle">species name</text>
+<path d="M160.0,710 H110.0 V390 H153.0" stroke="#9a9a9a" stroke-width="1.5" stroke-dasharray="5 4" fill="none" marker-end="url(#ah)"/>
+<rect x="68.0" y="498" width="84" height="40" rx="6" fill="#d5e3f6" stroke="#9a9a9a" stroke-width="1" />
+<text x="110.0" y="515.0" font-size="10.5" fill="#1d2b7d" font-weight="700" text-anchor="middle">DeepStack</text>
+<text x="110.0" y="530.0" font-size="10.5" fill="#1d2b7d" font-weight="700" text-anchor="middle">mergers ×3</text>
+<text x="102.0" y="560.0" font-size="10.5" fill="#777" font-weight="600" text-anchor="end">not adapted:</text>
+<text x="102.0" y="574.0" font-size="10" fill="#777" font-weight="500" text-anchor="end">ViT layers</text>
+<text x="102.0" y="587.0" font-size="10" fill="#777" font-weight="500" text-anchor="end">5, 11, 17</text>
+<text x="260.0" y="840.0" font-size="17" fill="#222" font-weight="400" text-anchor="middle">a. Qwen3-VL-2B</text>
+<path d="M360.0,520.0 L540.0,330.0" stroke="#ef8a5a" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+<path d="M360.0,640.0 L540.0,760.0" stroke="#ef8a5a" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+<rect x="540.0" y="330" width="460" height="430" rx="12" fill="none" stroke="#cfcfcf" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="992.0" y="354.0" font-size="14" fill="#222" font-weight="700" text-anchor="end">× 196 tokens</text>
+<text x="770.0" y="806.0" font-size="12.5" fill="#444" font-weight="500" text-anchor="middle">2 × 2 neighbouring patches from the vision encoder, 1024-d each</text>
+<path d="M635.0,790.0 L635.0,734.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<path d="M725.0,790.0 L725.0,734.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<path d="M815.0,790.0 L815.0,734.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<path d="M905.0,790.0 L905.0,734.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="575.0" y="690.0" width="390.0" height="42.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="770.0" y="708.0" font-size="14.5" fill="#1d2b7d" font-weight="700" text-anchor="middle">LayerNorm</text>
+<text x="770.0" y="725.0" font-size="11" fill="#777" font-weight="500" text-anchor="middle">applied to each patch · frozen</text>
+<path d="M635.0,690.0 L635.0,664.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<path d="M725.0,690.0 L725.0,664.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<path d="M815.0,690.0 L815.0,664.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<path d="M905.0,690.0 L905.0,664.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<path d="M635.0,664.0 L905.0,664.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<path d="M770.0,664.0 L770.0,646.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="685.0" y="624.0" width="170.0" height="20.0" fill="#111"/>
+<text x="770.0" y="638.5" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="middle">concatenate → 4096-d</text>
+<path d="M770.0,624.0 L770.0,600.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="685.0" y="552.0" width="170.0" height="46.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="770.0" y="572.0" font-size="14.5" fill="#1d2b7d" font-weight="700" text-anchor="middle">linear_fc1</text>
+<text x="770.0" y="589.0" font-size="11" fill="#777" font-weight="500" text-anchor="middle">4096 → 4096</text>
+<rect x="822.0" y="540.0" width="66" height="22" rx="11" fill="#fbd9bd" stroke="#e0522b" stroke-width="1.2"/>
+<path transform="translate(835.0,551.0) scale(0.62)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="863.0" y="555.5" font-size="12" fill="#e0522b" font-weight="700" text-anchor="middle">LoRA</text>
+<path d="M770.0,552.0 L770.0,528.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="735.0" y="506.0" width="70.0" height="20.0" fill="#111"/>
+<text x="770.0" y="520.5" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="middle">GELU</text>
+<path d="M770.0,506.0 L770.0,482.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="685.0" y="434.0" width="170.0" height="46.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="770.0" y="454.0" font-size="14.5" fill="#1d2b7d" font-weight="700" text-anchor="middle">linear_fc2</text>
+<text x="770.0" y="471.0" font-size="11" fill="#777" font-weight="500" text-anchor="middle">4096 → 2048</text>
+<rect x="822.0" y="422.0" width="66" height="22" rx="11" fill="#fbd9bd" stroke="#e0522b" stroke-width="1.2"/>
+<path transform="translate(835.0,433.0) scale(0.62)" fill="#e5432a" d="M0,-9 C2,-5 7,-3 6,3 C5.5,7 2.5,9 0,9 C-3,9 -6,6.5 -6,2.5 C-6,-1 -3,-2 -2,-5 C-1,-2 0,-1 1,-1 C1.5,-4 0.5,-6 0,-9 Z"/>
+<text x="863.0" y="437.5" font-size="12" fill="#e0522b" font-weight="700" text-anchor="middle">LoRA</text>
+<path d="M770.0,434.0 L770.0,406.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<text x="770.0" y="394.0" font-size="12.5" fill="#222" font-weight="700" text-anchor="middle">one image token, 2048-d</text>
+<text x="770.0" y="376.0" font-size="11.5" fill="#777" font-weight="500" text-anchor="middle">→ the language model</text>
+<text x="672.0" y="580.0" font-size="12" fill="#e0522b" font-weight="700" text-anchor="end">LoRA on both</text>
+<text x="672.0" y="596.0" font-size="12" fill="#e0522b" font-weight="500" text-anchor="end">linear layers</text>
+<text x="672.0" y="520.0" font-size="11" fill="#777" font-weight="500" text-anchor="end">no weights</text>
+<text x="770.0" y="840.0" font-size="17" fill="#222" font-weight="400" text-anchor="middle">b. Inside the merger</text>
+<rect x="1160.0" y="300" width="300" height="420" rx="10" fill="#ffffff" stroke="#ef8a5a" stroke-width="2"/>
+<text x="1174.0" y="322.0" font-size="12" fill="#8a5a44" font-weight="500" text-anchor="start">inside fc1 and fc2</text>
+<text x="1310.0" y="700.0" font-size="15" fill="#222" font-weight="700" text-anchor="middle">x</text>
+<path d="M1310.0,688.0 L1310.0,664.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<path d="M1235.0,664.0 L1355.0,664.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<path d="M1235.0,664.0 L1235.0,616.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="1195.0" y="556.0" width="80.0" height="58.0" rx="8" fill="#d5e3f6" filter="url(#sh)"/>
+<text x="1235.0" y="582.0" font-size="14.5" fill="#1d2b7d" font-weight="700" text-anchor="middle">W</text>
+<text x="1235.0" y="599.0" font-size="11" fill="#777" font-weight="500" text-anchor="middle">frozen</text>
+<path d="M1355.0,664.0 L1355.0,642.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<polygon points="1333.0,600.0 1377.0,600.0 1401.0,640.0 1309.0,640.0" fill="#fbd9bd" filter="url(#sh)"/>
+<text x="1355.0" y="619.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="middle">A</text>
+<text x="1355.0" y="633.0" font-size="10.5" fill="#e0522b" font-weight="500" text-anchor="middle">r × d_in</text>
+<path d="M1355.0,600.0 L1355.0,584.0" stroke="#111111" stroke-width="1.8" fill="none"/>
+<text x="1405.0" y="596.0" font-size="11.5" fill="#8a5a44" font-weight="700" text-anchor="start">r = 112</text>
+<polygon points="1309.0,542.0 1401.0,542.0 1377.0,582.0 1333.0,582.0" fill="#fbd9bd" filter="url(#sh)"/>
+<text x="1355.0" y="561.0" font-size="14" fill="#e0522b" font-weight="700" text-anchor="middle">B</text>
+<text x="1355.0" y="575.0" font-size="10.5" fill="#e0522b" font-weight="500" text-anchor="middle">d_out × r</text>
+<text x="1405.0" y="566.0" font-size="11" fill="#8a5a44" font-weight="500" text-anchor="start">starts at 0</text>
+<path d="M1355.0,542.0 L1355.0,526.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<rect x="1320.0" y="504.0" width="70.0" height="20.0" fill="#111"/>
+<text x="1355.0" y="518.5" font-size="12.5" fill="#ffffff" font-weight="700" text-anchor="middle">× α/r = 2</text>
+<path d="M1235.0,556.0 L1235.0,452.0 L1297.0,452.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<path d="M1355.0,504.0 L1355.0,452.0 L1323.0,452.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<circle cx="1310.0" cy="452.0" r="11" fill="#fff" stroke="#8a8a8a" stroke-width="2"/>
+<path d="M1299.0,452.0 H1321.0 M1310.0,441.0 V463.0" stroke="#8a8a8a" stroke-width="2"/>
+<path d="M1310.0,441.0 L1310.0,392.0" stroke="#111111" stroke-width="1.8" fill="none" marker-end="url(#ah)"/>
+<text x="1310.0" y="364.0" font-size="14.5" fill="#222" font-weight="700" text-anchor="middle">h = Wx + (α/r)·BAx</text>
+<text x="1310.0" y="382.0" font-size="11" fill="#777" font-weight="500" text-anchor="middle">starts as the frozen layer, since B = 0</text>
+<path d="M1160.0,560.0 L890.0,551.0" stroke="#ef8a5a" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
+<text x="1310.0" y="756.0" font-size="11.5" fill="#444" font-weight="500" text-anchor="middle">fc1: (4096 + 4096) × 112 = 917,504</text>
+<text x="1310.0" y="774.0" font-size="11.5" fill="#444" font-weight="500" text-anchor="middle">fc2: (4096 + 2048) × 112 = 688,128</text>
+<text x="1310.0" y="794.0" font-size="11.5" fill="#444" font-weight="700" text-anchor="middle">total 1,605,632 trainable (0.08%)</text>
+<text x="1310.0" y="840.0" font-size="17" fill="#222" font-weight="400" text-anchor="middle">c. LoRA on one linear layer</text>
+</g>
+</svg>
