@@ -1,0 +1,27 @@
+{
+  "config": {
+    "dataset": "nabirds",
+    "split": "test",
+    "limit": null,
+    "batch_size": 4,
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "image_size": 448,
+    "adapter_path": null,
+    "run_name": "qwen_nabirds_zeroshot"
+  },
+  "device": "cuda",
+  "metrics": {
+    "n": 24633,
+    "exact_match": 0.24434701416798604,
+    "contains_match": 0.24674217513092192,
+    "top1": 0.3136848942475541,
+    "ambiguous_gap": 0.07,
+    "ambiguous_rate": 0.254333617504973,
+    "top1_confident": 0.382676393728223
+  },
+  "timing": {
+    "total_seconds": 2924.5553946060027,
+    "seconds_per_example": 0.11872510025599815,
+    "peak_memory_gb": 4.46244864
+  }
+}

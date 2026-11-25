@@ -1,0 +1,27 @@
+{
+  "config": {
+    "dataset": "nabirds",
+    "split": "test",
+    "limit": null,
+    "batch_size": 4,
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "image_size": 448,
+    "adapter_path": "results/qwen_nabirds_lora_vision/adapter",
+    "run_name": "qwen_nabirds_lora_vision_eval"
+  },
+  "device": "cuda",
+  "metrics": {
+    "n": 24633,
+    "exact_match": 0.7571550359274144,
+    "contains_match": 0.7576015913611821,
+    "top1": 0.7609304591401778,
+    "ambiguous_gap": 0.07,
+    "ambiguous_rate": 0.024479356960175374,
+    "top1_confident": 0.7752392842280482
+  },
+  "timing": {
+    "total_seconds": 3079.616266902005,
+    "seconds_per_example": 0.1250199434458655,
+    "peak_memory_gb": 4.469805056
+  }
+}

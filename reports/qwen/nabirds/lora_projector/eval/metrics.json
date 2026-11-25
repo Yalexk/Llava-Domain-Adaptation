@@ -1,0 +1,27 @@
+{
+  "config": {
+    "dataset": "nabirds",
+    "split": "test",
+    "limit": null,
+    "batch_size": 4,
+    "model_id": "Qwen/Qwen3-VL-2B-Instruct",
+    "image_size": 448,
+    "adapter_path": "results/qwen_nabirds_lora_projector/adapter",
+    "run_name": "qwen_nabirds_lora_projector_eval"
+  },
+  "device": "cuda",
+  "metrics": {
+    "n": 24633,
+    "exact_match": 0.7659643567571957,
+    "contains_match": 0.76600495270572,
+    "top1": 0.7667762757276824,
+    "ambiguous_gap": 0.07,
+    "ambiguous_rate": 0.010433158770754678,
+    "top1_confident": 0.7710042664916311
+  },
+  "timing": {
+    "total_seconds": 2852.3436054679987,
+    "seconds_per_example": 0.11579359418130146,
+    "peak_memory_gb": 4.471721984
+  }
+}
