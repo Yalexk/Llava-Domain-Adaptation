@@ -40,8 +40,8 @@ def sync(device):
 
 
 def pick_dtype(device):
-	# bf16 has fp32's range, so no loss scaling is needed. T4s lack it and fall back to fp16.
-	if device == "cuda" and torch.cuda.is_bf16_supported():
+	# bf16 has fp32's range, so no loss scaling is needed. T4s only emulate it (very slowly), so they use fp16.
+	if device == "cuda" and torch.cuda.is_bf16_supported(including_emulation=False):
 		return torch.bfloat16
 	return torch.float16
 
